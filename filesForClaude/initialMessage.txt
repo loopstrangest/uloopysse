@@ -1,0 +1,40 @@
+Hi Claude, I am creating this repo which will serve as a collaborative project between myself (Loopy) and Ulysse. Here is more information about the project between the quotes:
+
+"
+Ulysse-Loopy Web App Collaboration Pitch
+
+Purpose:
+Create an interesting web app through mostly-asychronous collaboration.
+Enjoy the unique nature of the collaboration.
+
+Deliverable:
+A free, open-source web app hosted on strangestloop.io and ulyssepence.com.
+A repository which, alongside the code, documents the async communications between the collaborators.
+
+Plan:
+Stage 1: Exploration
+Loop and Ulysse decide the repo name
+Loop creates the repo and adds Ulysse as a collaborator.
+Loop submits the first pull request which will establish an async documentation and communication system within the repo itself between Loop and Ulysse. This will allow each person to better understand the other’s thinking and decision making processes.
+Loop and Ulysse submit pull requests which do not require the others’ permission. Note: the app must be structured such that all major versions can be accessed and viewed in the app itself.
+Aimline: January 7th
+
+Stage 2: Refinement
+Loop and Ulysse have an occasional video call (once every 2-3 weeks) to discuss progress and brainstorm further progress.
+Loop and Ulysse continue to submit pull requests.
+When Loop or Ulysse believe that the web app has reached a finishing/stopping point, they reach out to the other person to discuss.
+Loop and Ulysse mutually agree that the web app is finished and discuss its online publication.
+Aimline: February 14th
+
+Stage 3: Launch
+Loop and Ulysse host the web app online.
+Loop and Ulysse make an SOP for collaborating on web apps.
+Loop and Ulysse celebrate!
+Aimline: February 21st
+"
+
+While the final outcome is somewhat open ended, we have also found mutual interest in this idea for the collaboration: "it could be a kind of walkie-talkie with visuals game/experience where someone on strangestloop is paired with someone on ulyssepence, each receives unique clues or information which they need to piece together to do... something."
+
+So, we are going to both contribute to this project, and we want to be able to asynchronously coordinate through this repo itself. So, what I want you to do first is brainstorm an intelligent communication framework that will live within this repo such that both Ulysse and I can understand each other's thinking and decision-making processes as we build this web app together. It ought to be structured in such a way that we can both contribute to it without needing permission from the other person. Make a proposal for how we can do this effectively, and I will accept or reject or request changes to it.
+
+Also bear in mind that each of us will pull latest versions from a github repo such that we are both contributing to the same codebase.
