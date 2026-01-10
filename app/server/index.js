@@ -88,6 +88,14 @@ io.on('connection', (socket) => {
     }
   });
 
+  // Game state sync - forward updates to partner
+  socket.on('send-game-update', (data) => {
+    const roomId = userRooms.get(socket.id);
+    if (roomId) {
+      socket.to(roomId).emit('game-state-update', data);
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
     const roomId = userRooms.get(socket.id);

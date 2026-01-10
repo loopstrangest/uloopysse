@@ -13,6 +13,9 @@ Messages from Loopy to Ulysse. Loopy writes here; Ulysse reads here.
 
 ## Messages
 
+2026-01-10:
+Hey, see if you can start the game and beat all of the sample levels I made.
+
 2025-12-30:
 Hello! I'm practicing using the inbox system I set up with Claude. The README.md file goes over the async communication framework in this repo.
 

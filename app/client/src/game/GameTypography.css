@@ -1,0 +1,307 @@
+/**
+ * Game Typography System
+ *
+ * All game-related messages (rules, clues, level transitions, answers)
+ * are styled distinctly from player chat messages:
+ * - Horizontally centered
+ * - Distinct visual style (not from either player)
+ * - Clear hierarchy between message types
+ */
+
+/* ============================================
+   BASE GAME MESSAGE CONTAINER
+   ============================================ */
+.game-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px 24px;
+  margin: 12px auto;
+  max-width: 80%;
+  border-radius: 12px;
+  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+}
+
+/* ============================================
+   LEVEL INDICATOR
+   Shows current level number
+   ============================================ */
+.game-message--level-indicator {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #4a4a6a;
+  color: #a0a0c0;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 8px 20px;
+}
+
+.game-message--level-indicator .level-number {
+  color: #7b68ee;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* ============================================
+   INSTRUCTIONS
+   Explains the game type to both players
+   ============================================ */
+.game-message--instructions {
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%);
+  border: 1px solid #3a3a5a;
+  color: #c0c0e0;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ============================================
+   CLUE
+   The private clue shown to each player
+   ============================================ */
+.game-message--clue {
+  background: linear-gradient(135deg, #1e1e3f 0%, #2a2a4f 100%);
+  border: 2px solid #5a5a8a;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 20px 32px;
+  box-shadow: 0 4px 20px rgba(90, 90, 138, 0.3);
+}
+
+.game-message--clue .clue-label {
+  font-size: 0.75rem;
+  color: #8888aa;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  font-weight: normal;
+}
+
+.game-message--clue .clue-content {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.game-message--clue .clue-content--image {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.game-message--clue .clue-content--link {
+  color: #7b9fff;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.game-message--clue .clue-content--link:hover {
+  color: #a0bfff;
+}
+
+/* ============================================
+   CORRECT ANSWER
+   Shown when a player gets the answer right
+   ============================================ */
+.game-message--correct {
+  background: linear-gradient(135deg, #0a2e1a 0%, #1a4a2e 100%);
+  border: 2px solid #2ecc71;
+  color: #2ecc71;
+  font-size: 1.1rem;
+  font-weight: bold;
+  animation: correctPulse 0.5s ease-out;
+  padding: 20px 32px;
+  gap: 12px;
+}
+
+.game-message--correct .correct-header {
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+}
+
+.game-message--correct .correct-label {
+  font-weight: normal;
+  color: #a0d8b0;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.game-message--correct .answer-word {
+  color: #ffffff;
+  background: rgba(46, 204, 113, 0.25);
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-top: 8px;
+}
+
+@keyframes correctPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.5);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px 10px rgba(46, 204, 113, 0.2);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+  }
+}
+
+/* ============================================
+   LEVEL TRANSITION
+   Visual separator between levels
+   ============================================ */
+.game-message--transition {
+  background: transparent;
+  border: none;
+  padding: 24px;
+  color: #6a6a8a;
+}
+
+.game-message--transition .transition-dots {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.game-message--transition .transition-dot {
+  width: 10px;
+  height: 10px;
+  background: #5a5a8a;
+  border-radius: 50%;
+  animation: dotPulse 1.5s infinite;
+}
+
+.game-message--transition .transition-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.game-message--transition .transition-dot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.game-message--transition .transition-dot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* ============================================
+   GAME OVER / STATS
+   End of game summary
+   ============================================ */
+.game-message--stats {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2a2a4e 100%);
+  border: 2px solid #5a5a8a;
+  color: #c0c0e0;
+  padding: 28px 36px;
+  min-width: 280px;
+}
+
+.game-message--stats .you-win {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.game-message--stats .creator-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+}
+
+.game-message--stats .creator-link {
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.game-message--stats .creator-link:hover {
+  opacity: 0.8;
+}
+
+.game-message--stats .creator-link.strangestloop {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.game-message--stats .creator-link.ulyssepence {
+  color: #f7454c;
+  text-shadow: 0 0 8px rgba(247, 69, 76, 0.3);
+}
+
+.game-message--stats .link-separator {
+  color: #5a5a8a;
+  font-size: 0.75rem;
+}
+
+.game-message--stats .stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.game-message--stats .stat-row {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.game-message--stats .stat-label {
+  color: #8888aa;
+}
+
+.game-message--stats .stat-value {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ============================================
+   HINT (optional, if players request)
+   ============================================ */
+.game-message--hint {
+  background: linear-gradient(135deg, #2e2e1a 0%, #4a4a2e 100%);
+  border: 1px dashed #8a8a4a;
+  color: #c0c080;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.game-message--hint::before {
+  content: '💡 ';
+}
+
+/* ============================================
+   ERROR / INVALID
+   ============================================ */
+.game-message--error {
+  background: linear-gradient(135deg, #2e1a1a 0%, #4a2e2e 100%);
+  border: 1px solid #8a4a4a;
+  color: #e07070;
+  font-size: 0.9rem;
+}

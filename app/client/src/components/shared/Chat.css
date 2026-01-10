@@ -11,11 +11,29 @@
 
 .messages-container {
   flex: 1;
-  overflow-y: auto;
-  padding: 20px 0;
+  overflow-y: scroll; /* Always show scrollbar space */
+  padding: 20px 8px 20px 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  /* Firefox - always reserve space, transparent by default */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 0;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
 }
 
 .message {
@@ -120,6 +138,18 @@
   background-color: #fff;
 }
 
+/* Strangestloop scrollbar - light/white theme */
+.chat-container.strangestloop .messages-container:hover::-webkit-scrollbar-thumb,
+.chat-container.strangestloop .messages-container:active::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.chat-container.strangestloop .messages-container:hover,
+.chat-container.strangestloop .messages-container:active {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
 .chat-container.ulyssepence .message.sent {
   background-color: #f7454c;
 }
@@ -130,4 +160,44 @@
 
 .chat-container.ulyssepence .input-container button:hover:not(:disabled) {
   background-color: #84739c;
+}
+
+/* Ulyssepence scrollbar - red/purple theme */
+.chat-container.ulyssepence .messages-container:hover::-webkit-scrollbar-thumb,
+.chat-container.ulyssepence .messages-container:active::-webkit-scrollbar-thumb {
+  background: rgba(247, 69, 76, 0.6);
+}
+
+.chat-container.ulyssepence .messages-container:hover,
+.chat-container.ulyssepence .messages-container:active {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(247, 69, 76, 0.6) transparent;
+}
+
+/* Game Message Wrapper - for inline game messages */
+.game-message-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 16px 0;
+}
+
+.game-message-wrapper.level-start {
+  margin: 24px 0;
+}
+
+/* Horizontal separator line */
+.game-separator {
+  width: 80%;
+  max-width: 400px;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.2) 80%,
+    transparent
+  );
+  margin: 16px 0;
 }
