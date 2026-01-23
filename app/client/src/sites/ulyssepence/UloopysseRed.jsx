@@ -2,6 +2,73 @@ import { useEffect, useRef } from 'react';
 import Phaser from 'phaser';
 import './UloopysseRed.css';
 
+class BinarySplitPartitioning {
+  static createRoomReverseTree(width, height, iterations) {
+    const w = width
+    const h = height
+    const ratio = w / (w + h)
+
+    const tree = {
+      bl: [0, 0],
+      tr: [w, h],
+      parent: null,
+    }
+
+    let leaves = [tree]
+    for (let i = 0; i < iterations; i++) {
+      let newLeaves = []
+      for (let leaf of leaves) {
+        // Vertical line
+        const dividerRandom = 0.48 + 0.04 * Math.random()
+        if (Math.random() < ratio) {
+          const divider = leaf.bl[0] + Math.floor((leaf.tr[0] - leaf.bl[0]) * dividerRandom)
+          newLeaves.push(
+            {
+              bl: leaf.bl,
+              tr: [divider, leaf.tr[1]],
+              parent: leaf,
+            },
+            {
+              bl: [divider, leaf.bl[1]],
+              tr: leaf.tr,
+              parent: leaf,
+            }
+          )
+
+        // Horizontal Line
+        } else {
+          const divider = leaf.bl[1] + Math.floor((leaf.tr[1] - leaf.bl[1]) * dividerRandom)
+          newLeaves.push(
+            {
+              bl: leaf.bl,
+              tr: [leaf.tr[0], divider],
+              parent: leaf,
+            },
+            {
+              bl: [leaf.bl[0], divider],
+              tr: leaf.tr,
+              parent: leaf,
+            }
+          )
+        }
+      }
+
+      leaves = newLeaves
+    }
+
+    const removals = leaves.length / 2
+    for (let i = 0; i < removals; i++) {
+      const tempIdx = Math.floor(leaves.length * Math.random())
+      const temp = leaves[0]
+      leaves[0] = leaves[tempIdx]
+      leaves[tempIdx] = temp
+      leaves.shift() 
+    }
+
+    return leaves
+  }
+}
+
 // Main game scene - this is where you'll build your Pokemon-style world
 class GameScene extends Phaser.Scene {
   // Grid-based movement settings (Pokemon style)
@@ -19,9 +86,8 @@ class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    // Load your tileset image
-    // Drop your tileset PNG in: public/game/tilesets/
-    // this.load.image('tiles', '/game/tilesets/tileset.png');
+    // Load tileset image
+    this.load.image('tiles', '/game/tilesets/tileset.png');
 
     // Load tilemap JSON (exported from Tiled)
     // Drop your map JSON in: public/game/maps/
@@ -34,51 +100,10 @@ class GameScene extends Phaser.Scene {
     //   frameHeight: 16
     // });
 
-    // For now, we'll create placeholder graphics
     this.createPlaceholderAssets();
   }
 
   createPlaceholderAssets() {
-    // Create a simple tileset texture (grass + path)
-    const tileGraphics = this.make.graphics({ x: 0, y: 0 });
-
-    // Grass tile (0)
-    tileGraphics.fillStyle(0xb4739c);
-    tileGraphics.fillRect(0, 0, 16, 16);
-    tileGraphics.fillStyle(0xa4537c);
-    tileGraphics.fillRect(2, 2, 2, 2);
-    tileGraphics.fillRect(8, 6, 2, 2);
-    tileGraphics.fillRect(4, 10, 2, 2);
-    tileGraphics.fillRect(12, 12, 2, 2);
-
-    // Path tile (1)
-    tileGraphics.fillStyle(0xf7754c);
-    tileGraphics.fillRect(16, 0, 16, 16);
-    tileGraphics.fillStyle(0xff8f8f);
-    tileGraphics.fillRect(18, 3, 2, 2);
-    tileGraphics.fillRect(26, 8, 2, 2);
-    tileGraphics.fillRect(20, 12, 2, 2);
-
-    // Water tile (2)
-    tileGraphics.fillStyle(0x481010);
-    tileGraphics.fillRect(32, 0, 16, 16);
-    tileGraphics.fillStyle(0x684040);
-    tileGraphics.fillRect(34, 4, 6, 2);
-    tileGraphics.fillRect(38, 10, 6, 2);
-
-    // Tree/obstacle tile (3)
-    tileGraphics.fillStyle(0x481010);
-    tileGraphics.fillRect(48, 0, 16, 16);
-    tileGraphics.fillStyle(0x4d5a20);
-    tileGraphics.fillRect(52, 2, 8, 8);
-    tileGraphics.fillStyle(0x94537c);
-    tileGraphics.fillRect(54, 4, 4, 4);
-    tileGraphics.fillStyle(0x94537c);
-    tileGraphics.fillRect(55, 10, 2, 6);
-
-    tileGraphics.generateTexture('placeholder-tiles', 64, 16);
-    tileGraphics.destroy();
-
     // Create player sprite
     const playerGraphics = this.make.graphics({ x: 0, y: 0 });
 
@@ -97,27 +122,73 @@ class GameScene extends Phaser.Scene {
 
   create() {
     // Create a procedural tilemap for demo
-    const mapWidth = Math.ceil(this.scale.width / this.TILE_SIZE) + 4;
-    const mapHeight = Math.ceil(this.scale.height / this.TILE_SIZE) + 4;
+    const mapWidth = Math.ceil(this.game.config.width);
+    const mapHeight = Math.ceil(this.game.config.height);
 
-    // Generate map data
     const mapData = [];
     for (let y = 0; y < mapHeight; y++) {
       const row = [];
       for (let x = 0; x < mapWidth; x++) {
-        // Mostly grass with some paths and trees
-        const rand = Math.random();
-        if (rand < 0.7) {
-          row.push(0); // grass
-        } else if (rand < 0.85) {
-          row.push(1); // path
-        } else if (rand < 0.92) {
-          row.push(3); // tree
-        } else {
-          row.push(2); // water
-        }
+        row.push(5)
       }
       mapData.push(row);
+    }
+
+    const carveRoom = (bl, tr, padding) => {
+      for (let row = bl[1] + padding; row < tr[1] - padding; row++) {
+        for (let col = bl[0] + padding; col < tr[0] - padding; col++) {
+          mapData[row][col] = 0
+        }
+      }
+    }
+
+    const carveHallway = (room1, room2) => {
+      const center1 = [
+        Math.floor((room1.bl[0] + room1.tr[0]) / 2),
+        Math.floor((room1.bl[1] + room1.tr[1]) / 2)
+      ]
+      const center2 = [
+        Math.floor((room2.bl[0] + room2.tr[0]) / 2),
+        Math.floor((room2.bl[1] + room2.tr[1]) / 2)
+      ]
+
+      const [startX, endX] = center1[0] < center2[0]
+        ? [center1[0], center2[0]]
+        : [center2[0], center1[0]]
+      for (let col = startX; col <= endX; col++) {
+        if (mapData[center1[1]]) mapData[center1[1]][col] = 0
+      }
+
+      const [startY, endY] = center1[1] < center2[1]
+        ? [center1[1], center2[1]]
+        : [center2[1], center1[1]]
+      for (let row = startY; row <= endY; row++) {
+        if (mapData[row]) mapData[row][center2[0]] = 0
+      }
+    }
+
+    const bspIterations = 4
+    const padding = 1
+    let parents = BinarySplitPartitioning.createRoomReverseTree(mapWidth, mapHeight, bspIterations)
+    for (let i = 0; i < bspIterations; i++) {
+      let newParents = []
+      for (let j = 0; j < parents.length; j += 2) {
+        const left = parents[j]
+        const right = parents[j + 1]
+
+        if (i == 0) {
+          carveRoom(left.bl, left.tr, padding)
+          carveRoom(right.bl, right.tr, padding)
+        }
+
+        carveHallway(left, right)
+        newParents.push(left.parent)
+      }
+
+      parents = newParents
+      if (parents.length == 1) {
+        break
+      }
     }
 
     // Clear a spawn area
@@ -138,7 +209,7 @@ class GameScene extends Phaser.Scene {
       tileHeight: this.TILE_SIZE
     });
 
-    const tileset = this.map.addTilesetImage('placeholder-tiles', undefined, 16, 16, 0, 0);
+    const tileset = this.map.addTilesetImage('tiles', undefined, 16, 16, 0, 0);
     if (tileset) {
       const layer = this.map.createLayer(0, tileset, 0, 0);
 
@@ -246,8 +317,8 @@ function UloopysseRed() {
     const config = {
       type: Phaser.AUTO,
       parent: containerRef.current,
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: 40,
+      height: 40,
       pixelArt: true, // Crisp pixels for retro look
       backgroundColor: '#1a1a2e',
       scene: [GameScene],
