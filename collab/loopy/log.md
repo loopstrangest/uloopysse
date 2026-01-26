@@ -6,6 +6,15 @@ This is Loopy's personal thinking journal. Write freely here to document your th
 
 ---
 
+2026-01-25:
+Making level 2, 7 and 12 with increasingly difficult categories of images.
+Same for math problems for levels 3, 8, and 13.
+Same for locations for levels 4, 9, and 14.
+Same for word problems for levels 5, 10, and 15.
+
+2026-01-19:
+Moving forward with fifteen levels: five level types X three levels per type. Today I am only brainstorming with Claude on the word combination levels. More on another day. I also had it refactor the levels file.
+
 2026-01-10:
 I'm back at it, brainstorming with Claude on how to make this a collaborative and maybe also competitive game. I gave it an example of the text client prompting both players to type the secret word, and one player gets the clue "pan" and the other player get the clue "cake". The first person to type and send "pancake" maybe gets a point, and definitely allows both players to advance to the next level.
 It would be good for the type of clue system to change every 5-10 levels so it's not too repetitive, and for the levels to increase in difficulty within each type. I thought of another example where one player gets a link to an essay URL and the other player gets e.g. "3rd paragraph, 3rd word."
