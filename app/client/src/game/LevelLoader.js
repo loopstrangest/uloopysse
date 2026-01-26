@@ -9,7 +9,7 @@
  * - Level packs/categories
  */
 
-import { sampleLevels } from './levels/sampleLevels';
+import { sampleLevels, generateLevelSet } from './levels/levels';
 import { processLevelImages } from './imageUtils';
 
 // Cache for processed levels

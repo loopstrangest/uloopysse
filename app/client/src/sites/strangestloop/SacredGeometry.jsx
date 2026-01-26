@@ -17,8 +17,10 @@ function SacredGeometry() {
   const lastTimestampRef = useRef(null);
   const [speed, setSpeed] = useState(1);
 
+  const speeds = [1, 5, 25];
+  const speedArrows = ['>', '>>', '>>>'];
+
   const cycleSpeed = () => {
-    const speeds = [1, 10, 25];
     const currentIndex = speeds.indexOf(speed);
     const nextSpeed = speeds[(currentIndex + 1) % speeds.length];
     setSpeed(nextSpeed);
@@ -816,7 +818,7 @@ function SacredGeometry() {
     <>
       <canvas ref={canvasRef} className="shapes-background" />
       <button className="speed-toggle" onClick={cycleSpeed}>
-        {speed}x
+        {speedArrows[speeds.indexOf(speed)]}
       </button>
     </>
   );

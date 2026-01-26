@@ -20,7 +20,7 @@ import {
   preloadUpcomingLevels,
   levelNeedsProcessing
 } from '../../game/LevelLoader';
-import { checkAnswer } from '../../game/levels/sampleLevels';
+import { checkAnswer } from '../../game/levels/levels';
 
 const SOCKET_URL = 'http://localhost:3001';
 

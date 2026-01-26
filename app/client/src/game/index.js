@@ -9,7 +9,7 @@ export {
   sampleLevels,
   assignClues,
   checkAnswer
-} from './levels/sampleLevels';
+} from './levels/levels';
 
 // UI Components
 export {
